@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 BE Repaired - Tech Repair & Support</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0f; color: #fff; min-height: 100vh; }
+        .hero { 
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 100px 40px;
+            text-align: center;
+        }
+        .hero h1 { font-size: 64px; margin-bottom: 20px; }
+        .hero p { font-size: 24px; opacity: 0.9; max-width: 600px; margin: 0 auto 40px; }
+        .services { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+        .services h2 { font-size: 42px; margin-bottom: 40px; text-align: center; }
+        .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .service { 
+            background: #1a1a25; padding: 40px; border-radius: 16px; 
+            border: 1px solid #333; transition: all 0.3s;
+        }
+        .service:hover { border-color: #f5576c; transform: translateY(-5px); }
+        .service h3 { font-size: 24px; margin-bottom: 15px; }
+        .service p { color: #888; line-height: 1.6; }
+        .process { padding: 80px 40px; background: #12121a; }
+        .process h2 { font-size: 42px; text-align: center; margin-bottom: 40px; }
+        .steps { display: flex; justify-content: center; gap: 40px; max-width: 1000px; margin: 0 auto; flex-wrap: wrap; }
+        .step { text-align: center; max-width: 200px; }
+        .step-num { 
+            width: 60px; height: 60px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 24px; font-weight: 700; margin: 0 auto 20px;
+        }
+        .cta { 
+            display: inline-block; padding: 16px 40px; 
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 10px; color: #fff; text-decoration: none; font-weight: 600;
+        }
+        footer { padding: 40px; text-align: center; color: #666; }
+        .home-link {
+            position: absolute; top: 20px; right: 20px;
+            padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 8px;
+            color: #fff; text-decoration: none; font-size: 14px;
+        }
+        .home-link:hover { background: rgba(255,255,255,0.3); }
+    </style>
+</head>
+<body>
+    <a href="https://b3rt.dev" class="home-link">← Back to b3rt.dev</a>
+    
+    <section class="hero">
+        <h1>🔧 BE Repaired</h1>
+        <p>Tech repair and support services. We fix, optimize, and protect your digital life.</p>
+        <a href="#services" class="cta">Get Help Now</a>
+    </section>
+    
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <div class="service-grid">
+            <div class="service">
+                <h3>💻 Computer Repair</h3>
+                <p>Hardware diagnostics, software troubleshooting, virus removal, and performance optimization.</p>
+            </div>
+            <div class="service">
+                <h3>📱 Phone & Tablet</h3>
+                <p>Screen repairs, battery replacement, data recovery, and software support.</p>
+            </div>
+            <div class="service">
+                <h3>🌐 Network Setup</h3>
+                <p>WiFi optimization, router configuration, and network security.</p>
+            </div>
+            <div class="service">
+                <h3>💾 Data Recovery</h3>
+                <p>Lost files, crashed drives, and backup solutions for peace of mind.</p>
+            </div>
+            <div class="service">
+                <h3>🔐 Security</h3>
+                <p>Antivirus installation, firewall setup, and privacy protection.</p>
+            </div>
+            <div class="service">
+                <h3>🤖 Smart Home</h3>
+                <p>Device setup, automation, and integration for your connected home.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="process">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>📞 Contact</h3>
+                <p>Describe your issue and schedule a visit or remote session.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>🔍 Diagnose</h3>
+                <p>We identify the problem and provide a clear quote.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>🔧 Repair</h3>
+                <p>Professional service with quality parts and expert care.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <h3>✅ Support</h3>
+                <p>Follow-up support to ensure everything works perfectly.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>🔧 BE Repaired • Part of <a href="https://b3rt.dev" style="color: #667eea;">b3rt.dev</a></p>
+    </footer>
+</body>
+</html>

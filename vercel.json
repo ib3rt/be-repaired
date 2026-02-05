@@ -1,0 +1,1 @@
+{"version":2,"name":"be-repaired","builds":[{"src":"*.html","use":"@vercel/static"}]}
