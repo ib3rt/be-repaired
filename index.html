@@ -4,374 +4,224 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🛠️ BE Repaired - Handyman Services</title>
+    <meta name="description" content="Professional handyman services. Book repairs, maintenance, and improvements online.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/design-system.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
-            background: #0a0a0f; 
-            color: #fff; 
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-        .hero { 
-            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            padding: 100px 40px;
+        /* Hero Override */
+        .hero {
+            padding: var(--space-3xl) 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
         }
-        .hero h1 { font-size: 64px; margin-bottom: 20px; }
-        .hero p { font-size: 24px; opacity: 0.9; max-width: 600px; margin: 0 auto 40px; }
-        .cta { 
-            display: inline-block; padding: 18px 48px; 
-            background: #fff; color: #f59e0b;
-            border-radius: 12px; text-decoration: none; font-weight: 700;
-            font-size: 20px;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
-        .section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
-        .section h2 { font-size: 48px; margin-bottom: 40px; text-align: center; }
-        .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .service { 
-            background: #1a1a25; padding: 40px; border-radius: 20px; 
-            border: 1px solid #333; transition: all 0.3s;
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: var(--space-lg);
         }
-        .service:hover { border-color: #f59e0b; transform: translateY(-5px); }
-        .service .icon { font-size: 48px; margin-bottom: 20px; }
-        .service h3 { font-size: 24px; margin-bottom: 15px; }
-        .service p { color: #888; font-size: 16px; }
-        .service ul { list-style: none; margin-top: 15px; }
-        .service li { padding: 8px 0; color: #888; font-size: 14px; }
-        .service li::before { content: "✓"; color: #f59e0b; margin-right: 10px; }
-        .stats { 
-            background: #12121a; padding: 60px 40px; 
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center;
+        .hero h1 span {
+            background: linear-gradient(135deg, #ffffff 0%, #fef3c7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .stat h3 { font-size: 48px; color: #f59e0b; margin-bottom: 10px; }
-        .stat p { font-size: 16px; color: #888; }
-        .process { background: #12121a; padding: 80px 40px; }
-        .process h2 { font-size: 48px; margin-bottom: 40px; text-align: center; }
-        .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .step { text-align: center; padding: 30px; }
-        .step .num { 
-            width: 70px; height: 70px; background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 28px; font-weight: 700; margin: 0 auto 20px;
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto var(--space-xl);
+            opacity: 0.95;
         }
-        .step h4 { font-size: 22px; margin-bottom: 15px; }
-        .step p { font-size: 15px; color: #888; }
-        .pricing { 
-            background: #0a0a0f; padding: 80px 40px; 
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1100px; margin: 0 auto;
+        /* Services */
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: var(--space-xl);
+            transition: all var(--ease-normal);
         }
-        .price { 
-            background: #1a1a25; padding: 40px; border-radius: 20px; 
-            text-align: center; border: 1px solid #333;
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--warning);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
         }
-        .price.featured { border-color: #f59e0b; background: linear-gradient(135deg, #1a1a25 0%, #2a2a35 100%); }
-        .price h3 { font-size: 24px; margin-bottom: 15px; }
-        .price .amount { font-size: 48px; font-weight: 700; color: #f59e0b; margin-bottom: 10px; }
-        .price .desc { color: #666; font-size: 14px; margin-bottom: 25px; }
-        .price ul { list-style: none; text-align: left; margin-bottom: 30px; }
-        .price li { padding: 12px 0; color: #888; border-bottom: 1px solid #252530; }
-        .price li::before { content: "✓"; color: #f59e0b; margin-right: 10px; }
-        .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        .testimonial { 
-            background: #1a1a25; padding: 30px; border-radius: 20px; 
-            border: 1px solid #333;
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: var(--space-md);
         }
-        .testimonial .stars { color: #FFD700; font-size: 20px; margin-bottom: 15px; }
-        .testimonial p { font-style: italic; color: #ccc; font-size: 16px; margin-bottom: 20px; }
-        .testimonial .author { color: #f59e0b; font-weight: 600; }
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .feature { 
-            background: #1a1a25; padding: 30px; border-radius: 16px; 
-            border: 1px solid #333; text-align: center;
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-sm);
         }
-        .feature .icon { font-size: 48px; margin-bottom: 15px; }
-        .feature h4 { font-size: 20px; margin-bottom: 10px; }
-        .feature p { font-size: 14px; color: #888; }
-        .faq { max-width: 800px; margin: 0 auto; }
-        .faq-item { 
-            background: #1a1a25; padding: 25px; border-radius: 12px; 
-            margin-bottom: 15px; border: 1px solid #333;
+        .service-card p {
+            color: var(--text-secondary);
         }
-        .faq-item h4 { font-size: 18px; margin-bottom: 10px; color: #f59e0b; }
-        .faq-item p { color: #888; font-size: 15px; }
-        footer { padding: 40px; text-align: center; color: #666; margin-top: 60px; }
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 42px; }
-            .stats { grid-template-columns: repeat(2, 1fr); }
-            .steps { grid-template-columns: 1fr; }
-            .pricing { grid-template-columns: 1fr; }
+        /* Features */
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: var(--space-lg);
+            text-align: center;
+            transition: all var(--ease-normal);
+        }
+        .feature-card:hover {
+            border-color: var(--warning);
+            transform: translateY(-2px);
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-sm);
+        }
+        .feature-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0;
         }
     </style>
 </head>
 <body>
+    <!-- Hero -->
     <section class="hero">
-        <h1>🛠️ BE Repaired</h1>
-        <p>Professional handyman services. Home repairs, maintenance, and improvements you can trust.</p>
-        <a href="#contact" class="cta">Get Help Now</a>
-    </section>
-    
-    <section class="stats">
-        <div class="stat"><h3>500+</h3><p>Jobs Completed</p></div>
-        <div class="stat"><h3>98%</h3><p>Customer Satisfaction</p></div>
-        <div class="stat"><h3>4.9★</h3><p>Average Rating</p></div>
-        <div class="stat"><h3>15</h3><p>Years Experience</p></div>
-    </section>
-    
-    <section class="section">
-        <h2>Our Services</h2>
-        <div class="services">
-            <div class="service">
-                <div class="icon">🔧</div>
-                <h3>General Repairs</h3>
-                <p>Fixing leaks, squeaky doors, broken fixtures, and everyday household repairs.</p>
-                <ul>
-                    <li>Door & window repairs</li>
-                    <li>Cabinet hardware</li>
-                    <li>Drywall patching</li>
-                    <li>Weatherstripping</li>
-                    <li>Small fixes galore</li>
-                </ul>
-            </div>
-            <div class="service">
-                <div class="icon">🚰</div>
-                <h3>Minor Plumbing</h3>
-                <p>Faucet repairs, toilet fixes, pipe patching, and drain cleaning.</p>
-                <ul>
-                    <li>Leaky faucet repair</li>
-                    <li>Toilet running fix</li>
-                    <li>Drain clearing</li>
-                    <li>Pipe insulation</li>
-                    <li>Water heater check</li>
-                </ul>
-            </div>
-            <div class="service">
-                <div class="icon">⚡</div>
-                <h3>Minor Electrical</h3>
-                <p>Outlet repairs, light fixture installation, and switch replacements.</p>
-                <ul>
-                    <li>Outlet repair/replace</li>
-                    <li>Light fixture install</li>
-                    <li>Switch upgrades</li>
-                    <li>Ceiling fan install</li>
-                    <li>Smart device setup</li>
-                </ul>
-            </div>
-            <div class="service">
-                <div class="icon">🪑</div>
-                <h3>Furniture Assembly</h3>
-                <p>Building furniture, mounting TVs, and hanging shelves securely.</p>
-                <ul>
-                    <li>Ready-to-assemble furniture</li>
-                    <li>TV mounting</li>
-                    <li>Shelf installation</li>
-                    <li>Mirror hanging</li>
-                    <li>Secure anchoring</li>
-                </ul>
-            </div>
-            <div class="service">
-                <div class="icon">🎨</div>
-                <h3>Painting</h3>
-                <p>Interior painting, touch-ups, and prep work for your spaces.</p>
-                <ul>
-                    <li>Room painting</li>
-                    <li>Cabinet painting</li>
-                    <li>Trim & baseboards</li>
-                    <li>Wall repairs & prime</li>
-                    <li>Color consultation</li>
-                </ul>
-            </div>
-            <div class="service">
-                <div class="icon">🏠</div>
-                <h3>Home Maintenance</h3>
-                <p>Regular maintenance, seasonal checks, and property inspections.</p>
-                <ul>
-                    <li>Gutter cleaning</li>
-                    <li>Smoke detector install</li>
-                    <li>Weather prep</li>
-                    <li>Property walkthrough</li>
-                    <li>Preventive maintenance</li>
-                </ul>
+        <div class="container">
+            <a href="/" class="logo">🛠️ <span class="gradient-text">BE Repaired</span></a>
+            
+            <h1>Handyman Services <span>Done Right</span></h1>
+            <p>Professional repairs, maintenance, and improvements for your home or business. Book online today.</p>
+            
+            <div class="links">
+                <a href="#" class="btn btn-primary">📅 Book a Repair</a>
+                <a href="#services" class="btn btn-secondary">Our Services</a>
             </div>
         </div>
     </section>
-    
-    <section class="process">
-        <h2>How It Works</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="num">1</div>
-                <h4>📞 Contact</h4>
-                <p>Describe your project and schedule a visit.</p>
+
+    <main class="container">
+        <!-- Stats -->
+        <section class="stats">
+            <div class="stat">
+                <h3>200+</h3>
+                <p>Jobs Completed</p>
             </div>
-            <div class="step">
-                <div class="num">2</div>
-                <h4>🔍 Estimate</h4>
-                <p>We assess the work and provide a fair quote.</p>
+            <div class="stat">
+                <h3>4.8⭐</h3>
+                <p>Average Rating</p>
             </div>
-            <div class="step">
-                <div class="num">3</div>
-                <h4>🛠️ Repair</h4>
-                <p>Professional service with quality craftsmanship.</p>
+            <div class="stat">
+                <h3>24h</h3>
+                <p>Response Time</p>
             </div>
-            <div class="step">
-                <div class="num">4</div>
-                <h4>✅ Done</h4>
-                <p>Complete satisfaction with our work guarantee.</p>
+            <div class="stat">
+                <h3>100%</h3>
+                <p>Satisfaction</p>
             </div>
-        </div>
-    </section>
-    
-    <section class="section">
-        <h2>Service Areas</h2>
-        <div class="features">
-            <div class="feature">
-                <div class="icon">🏠</div>
-                <h4>Homes</h4>
-                <p>Single-family homes, townhouses, and condos</p>
+        </section>
+
+        <!-- Why Choose Us -->
+        <section>
+            <h2 class="section-title">Why Choose BE Repaired?</h2>
+            
+            <div class="tech-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h4>Fair Pricing</h4>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h4>On-Time</h4>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h4>Quality Work</h4>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h4>Full Toolkit</h4>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📞</div>
+                    <h4>Easy Booking</h4>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h4>Guaranteed</h4>
+                </div>
             </div>
-            <div class="feature">
-                <div class="icon">🏢</div>
-                <h4>Apartments</h4>
-                <p>Rental properties and managed complexes</p>
+        </section>
+
+        <!-- Services -->
+        <section id="services" style="margin-top: var(--space-3xl);">
+            <h2 class="section-title">Our Services</h2>
+            
+            <div class="cards">
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>General Repairs</h3>
+                    <p>Fixing leaks, squeaky doors, broken fixtures, and more. Small repairs done right.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🪑</div>
+                    <h3>Furniture Assembly</h3>
+                    <p>Get your new furniture assembled quickly and correctly. No more confusing instructions!</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Paint & Patches</h3>
+                    <p>Wall repairs, painting, and touch-ups. Make your space look fresh again.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🚿</div>
+                    <h3>Plumbing Minor</h3>
+                    <p>Leaky faucets, running toilets, and minor plumbing issues. Keep things flowing.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">💡</div>
+                    <h3>Electrical Minor</h3>
+                    <p>Light fixture installation, outlet repairs, and ceiling fan setup.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🏠</div>
+                    <h3>Maintenance</h3>
+                    <p>Regular maintenance checks. Prevent bigger problems before they happen.</p>
+                </div>
             </div>
-            <div class="feature">
-                <div class="icon">🏬</div>
-                <h4>Small Business</h4>
-                <p>Retail spaces and offices</p>
+        </section>
+
+        <!-- CTA -->
+        <section style="margin-top: var(--space-3xl);">
+            <div class="cta-section" style="background: linear-gradient(135deg, var(--warning) 0%, #D97706 100%); border-radius: 24px; padding: var(--space-3xl); text-align: center;">
+                <h2>Need Something Fixed?</h2>
+                <p style="max-width: 600px; margin: 0 auto var(--space-xl); font-size: 1.25rem;">Book your repair today and get your space back in shape.</p>
+                <div class="links" style="justify-content: center;">
+                    <a href="#" class="btn" style="background: white; color: var(--warning);">📅 Book Now</a>
+                    <a href="tel:+1234567890" class="btn" style="background: transparent; border: 2px solid white; color: white;">📞 Call Us</a>
+                </div>
             </div>
-            <div class="feature">
-                <div class="icon">🔑</div>
-                <h4>Vacation Rentals</h4>
-                <p>Airbnb and VRBO turnover maintenance</p>
-            </div>
-        </div>
-    </section>
-    
-    <section class="section" style="background: #12121a;">
-        <h2>Why Choose BE Repaired?</h2>
-        <div class="features">
-            <div class="feature">
-                <div class="icon">⏰</div>
-                <h4>Flexible Scheduling</h4>
-                <p>Evenings and weekends available</p>
-            </div>
-            <div class="feature">
-                <div class="icon">💰</div>
-                <h4>Upfront Pricing</h4>
-                <p>No hidden fees or surprise charges</p>
-            </div>
-            <div class="feature">
-                <div class="icon">🛠️</div>
-                <h4>Quality Tools</h4>
-                <p>Professional equipment for professional results</p>
-            </div>
-            <div class="feature">
-                <div class="icon">✅</div>
-                <h4>Satisfaction Guaranteed</h4>
-                <p>100% satisfaction guarantee or free return visit</p>
-            </div>
-            <div class="feature">
-                <div class="icon">📋</div>
-                <h4>Licensed & Insured</h4>
-                <p>Peace of mind with proper coverage</p>
-            </div>
-            <div class="feature">
-                <div class="icon">💬</div>
-                <h4>Clear Communication</h4>
-                <p>No jargon, just honest work</p>
-            </div>
-        </div>
-    </section>
-    
-    <section class="section">
-        <h2>Pricing</h2>
-        <div class="pricing">
-            <div class="price">
-                <h3>Small Jobs</h3>
-                <div class="amount">$75</div>
-                <div class="desc">per hour • 1-2 hour jobs</div>
-                <ul>
-                    <li>Quick fixes</li>
-                    <li>Furniture assembly</li>
-                    <li>Small repairs</li>
-                    <li>1-hour minimum</li>
-                    <li>Materials extra</li>
-                </ul>
-            </div>
-            <div class="price featured">
-                <h3>Standard Jobs</h3>
-                <div class="amount">$65</div>
-                <div class="desc">per hour • 2-4 hour jobs</div>
-                <ul>
-                    <li>Medium projects</li>
-                    <li>Multiple repairs</li>
-                    <li>Painting touch-ups</li>
-                    <li>Installation work</li>
-                    <li>Materials included</li>
-                </ul>
-            </div>
-            <div class="price">
-                <h3>Large Projects</h3>
-                <div class="amount">$55</div>
-                <div class="desc">per hour • 4+ hour jobs</div>
-                <ul>
-                    <li>Major repairs</li>
-                    <li>Room prep</li>
-                    <li>Full installations</li>
-                    <li>Discounted rate</li>
-                    <li>Custom quotes</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    
-    <section class="section" style="background: #12121a;">
-        <h2>What Customers Say</h2>
-        <div class="testimonials">
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p>"BE Repaired fixed three things in my house that I'd been putting off for months. Fast, professional, and fair pricing. Will definitely use again!"</p>
-                <div class="author">— Mike T., Homeowner</div>
-            </div>
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p>"Assembled all my IKEA furniture in under 2 hours. No missing parts, no damaged pieces. Finally got that built-in bookshelf I've wanted!"</p>
-                <div class="author">— Sarah L., Happy Customer</div>
-            </div>
-            <div class="testimonial">
-                <div class="stars">★★★★★</div>
-                <p>"Fixed a leaking faucet that two 'professionals' couldn't figure out. These guys know their stuff. Highly recommend!"</p>
-                <div class="author">— David K., Repeat Customer</div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="section" id="contact">
-        <h2>Ready to Get Started?</h2>
-        <div class="faq">
-            <div class="faq-item">
-                <h4>📞 How quickly can you come out?</h4>
-                <p>Usually within 24-48 hours for standard jobs. Emergency calls available for urgent repairs.</p>
-            </div>
-            <div class="faq-item">
-                <h4>💰 Do you give free estimates?</h4>
-                <p>Yes! We provide free, upfront estimates before starting any work. No surprises.</p>
-            </div>
-            <div class="faq-item">
-                <h4>🔧 What areas do you serve?</h4>
-                <p>We serve the local metropolitan area. Contact us to confirm we cover your location.</p>
-            </div>
-            <div class="faq-item">
-                <h4>⏰ What are your hours?</h4>
-                <p>Monday-Friday 8am-6pm, Saturday 9am-5pm. Evening appointments available upon request.</p>
-            </div>
-        </div>
-    </section>
-    
+        </section>
+    </main>
+
+    <!-- Footer -->
     <footer>
-        <p>🛠️ BE Repaired — Handyman Services</p>
-        <p style="margin-top: 10px;">Part of <a href="https://b3rt.dev" style="color: #f59e0b;">b3rt.dev</a></p>
+        <div class="container">
+            <p>🛠️ BE Repaired | Handyman Services</p>
+            <p style="margin-top: var(--space-sm); font-size: 0.875rem;">
+                Part of the <a href="https://b3rt.dev">Life OS</a> ecosystem
+            </p>
+        </div>
     </footer>
 </body>
 </html>
